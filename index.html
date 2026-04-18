@@ -3,11 +3,2777 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Современный Сайт</title>
+    <title>Мираж - платформа для изучения танца</title>
     <style>
         :root {
-            --primary-color: #3b82f6;
-            --secondary-color: #1e40af;
+            --primary-color: #2C3E50;
+            --secondary-color: #4CA1AF;
+            --accent-color: #e74c3c;
+            --text-color: #1f2937;
+            --bg-color: #ffffff;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --text-color: #f3f4f6;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            padding-top: 70px;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            padding: 0.5rem 1.2rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .mode-toggle:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .mode-toggle.admin {
+            background: var(--accent-color);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem 0.7rem;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(20deg);
+        }
+
+        /* Контейнеры */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Главная секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: var(--transition);
+            border: 2px solid white;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Секции */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        /* Информационная секция */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Категории по центру */
+        .categories-section {
+            text-align: center;
+        }
+
+        .categories-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .category-btn {
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .category-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .category-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Галерея */
+        .gallery-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .element-card {
+            background: var(--bg-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .element-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .element-media {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .element-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .element-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .element-category {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-description {
+            color: #666;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .element-controls {
+            display: none;
+            gap: 0.5rem;
+        }
+
+        .element-controls.visible {
+            display: flex;
+        }
+
+        .btn-small {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .btn-edit {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Админ панель */
+        .admin-panel {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 2rem;
+        }
+
+        .admin-panel.visible {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(76, 161, 175, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* О платформе */
+        .about-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 3rem;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Мобильная адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                gap: 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .categories-grid {
+                gap: 1rem;
+            }
+
+            .category-btn {
+                min-width: 150px;
+                padding: 0.8rem 1rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .element-media {
+                height: 180px;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-section {
+                padding: 1.5rem;
+            }
+
+            .about-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="logo">Мираж</div>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#elements">Элементы</a></li>
+            <li><a href="#about">О сервисе</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="nav-controls">
+            <button class="mode-toggle" id="modeToggle">Ученик</button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Главная секция -->
+    <section class="hero" id="home">
+        <h1>Мираж</h1>
+        <p>Полнофункциональная платформа для изучения и совершенствования танцевальных элементов под руководством профессионалов</p>
+        <div class="cta-buttons">
+            <a href="#elements" class="btn">Начать обучение</a>
+            <a href="#about" class="btn secondary">Узнать подробнее</a>
+        </div>
+    </section>
+
+    <!-- Админ панель -->
+    <div class="admin-panel" id="adminPanel">
+        <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Админ-панель</h2>
+        <form id="uploadForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="fileInput">Загрузить медиафайл (фото/видео)</label>
+                    <input type="file" id="fileInput" accept="image/*,video/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="categorySelect">Категория</label>
+                    <select id="categorySelect" required>
+                        <option value="">Выберите категорию</option>
+                        <option value="станок">Элементы на станке</option>
+                        <option value="партер">Элементы в партере</option>
+                        <option value="прыжки">Прыжки</option>
+                        <option value="повороты">Повороты</option>
+                        <option value="растяжка">Растяжка</option>
+                        <option value="другое">Другое</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionInput">Описание элемента</label>
+                <textarea id="descriptionInput" placeholder="Введите описание техники выполнения, рекомендации, сложность..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Загрузить элемент</button>
+        </form>
+    </div>
+
+    <!-- Секция элементов -->
+    <section id="elements">
+        <div class="container">
+            <h2 class="section-title">Танцевальные элементы</h2>
+            
+            <div class="categories-section">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Выберите категорию</h3>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Категории будут добавлены динамически -->
+                </div>
+            </div>
+
+            <div class="gallery-section">
+                <h3 style="color: var(--primary-color);" id="galleryTitle">Все элементы</h3>
+                <div class="gallery-container" id="galleryContainer">
+                    <!-- Элементы будут добавлены динамически -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О сервисе -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">О платформе Мираж</h2>
+            
+            <div class="about-section">
+                <h2>Ваше пространство для танца</h2>
+                <p>Мираж — это современная платформа, которая объединяет учеников и педагогов под одной крышей. Здесь вы найдёте полную библиотеку танцевальных элементов, отсортированные по категориям, с подробными описаниями и рекомендациями от профессионалов.</p>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary-color); margin: 3rem 0 2rem;">Почему Мираж?</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📚 Полная библиотека</h3>
+                    <p>Огромная коллекция танцевальных элементов, от базовых до продвинутых уровней</p>
+                </div>
+                <div class="info-card">
+                    <h3>👨‍🏫 Руководство экспертов</h3>
+                    <p>Детальные описания и рекомендации от опытных хореографов</p>
+                </div>
+                <div class="info-card">
+                    <h3>📱 Доступность</h3>
+                    <p>Учитесь когда угодно и где угодно на любом устройстве</p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary-color); margin: 3rem 0 2rem;">Статистика</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="elementsCount">0</div>
+                    <div class="stat-label">Загруженных элементов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="categoriesCount">0</div>
+                    <div class="stat-label">Категорий</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Доступ к материалам</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📧 Email</h3>
+                    <p>qlepeshka@gmail.com</p>
+                </div>
+                <div class="info-card">
+                    <h3>📱 Телефон</h3>
+                    <p>+79381197399</p>
+                </div>
+                <div class="info-card">
+                    <h3>📍 Локация</h3>
+                    <p>Ростов-на-Дону, Евдокимова 33</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2024 Мираж. Все права защищены.</p>
+        <p>Платформа для обучения танцевальным элементам | <a href="#home">Наверх</a></p>
+    </footer>
+
+    <script>
+        let isAdmin = false;
+        let elements = JSON.parse(localStorage.getItem('danceElements')) || [];
+        let currentCategory = null;
+
+        // ===== Переключение темы =====
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Загрузка сохранённой темы
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        // ===== Переключение режима =====
+        const modeToggle = document.getElementById('modeToggle');
+        const adminPanel = document.getElementById('adminPanel');
+
+        modeToggle.addEventListener('click', () => {
+            isAdmin = !isAdmin;
+            modeToggle.textContent = isAdmin ? 'Администратор' : 'Ученик';
+            modeToggle.classList.toggle('admin');
+            adminPanel.classList.toggle('visible');
+            renderGallery();
+        });
+
+        // ===== Загрузка файла =====
+        const uploadForm = document.getElementById('uploadForm');
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const descriptionInput = document.getElementById('descriptionInput');
+            const categorySelect = document.getElementById('categorySelect');
+
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const element = {
+                    id: Date.now(),
+                    type: file.type.startsWith('image/') ? 'image' : 'video',
+                    dataUrl: e.target.result,
+                    description: descriptionInput.value,
+                    category: categorySelect.value
+                };
+                elements.push(element);
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderCategories();
+                renderGallery();
+                updateStats();
+                uploadForm.reset();
+                alert('✓ Элемент успешно загружен!');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ===== Рендер категорий =====
+        function renderCategories() {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            const categories = [...new Set(elements.map(el => el.category))];
+            
+            categoriesGrid.innerHTML = '<button class="category-btn active" data-category="">Все элементы</button>' + 
+                categories.map(cat => 
+                    `<button class="category-btn" data-category="${cat}">${getCategoryName(cat)}</button>`
+                ).join('');
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.dataset.category;
+                    renderGallery();
+                });
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                'станок': '🎭 Элементы на станке',
+                'партер': '⬇️ Элементы в партере',
+                'прыжки': '🦘 Прыжки',
+                'повороты': '🌀 Повороты',
+                'растяжка': '🧘 Растяжка',
+                'другое': '✨ Другое'
+            };
+            return names[cat] || cat;
+        }
+
+        // ===== Рендер галереи =====
+        function renderGallery() {
+            const galleryContainer = document.getElementById('galleryContainer');
+            const galleryTitle = document.getElementById('galleryTitle');
+            const filteredElements = currentCategory ? elements.filter(el => el.category === currentCategory) : elements;
+            
+            if (currentCategory) {
+                galleryTitle.textContent = getCategoryName(currentCategory);
+            } else {
+                galleryTitle.textContent = 'Все элементы';
+            }
+
+            if (filteredElements.length === 0) {
+                galleryContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Элементов в этой категории нет</div>';
+                return;
+            }
+
+            galleryContainer.innerHTML = filteredElements.map(el => `
+                <div class="element-card">
+                    ${el.type === 'image' ? 
+                        `<img src="${el.dataUrl}" alt="${el.description}" class="element-media">` :
+                        `<video src="${el.dataUrl}" controls class="element-media"></video>`
+                    }
+                    <div class="element-info">
+                        <div class="element-category">${getCategoryName(el.category)}</div>
+                        <h3>${el.description.substring(0, 50)}${el.description.length > 50 ? '...' : ''}</h3>
+                        <div class="element-description">${el.description}</div>
+                        <div class="element-controls ${isAdmin ? 'visible' : ''}">
+                            <button class="btn-small btn-edit" data-id="${el.id}">Редактировать</button>
+                            <button class="btn-small btn-delete" data-id="${el.id}">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Обработчики редактирования и удаления
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    editElement(id);
+                });
+            });
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm('Вы уверены? Это действие нельзя отменить.')) {
+                        deleteElement(id);
+                    }
+                });
+            });
+        }
+
+        function editElement(id) {
+            const element = elements.find(el => el.id === id);
+            if (!element) return;
+
+            const newDescription = prompt('Отредактируйте описание:', element.description);
+            if (newDescription !== null && newDescription.trim()) {
+                element.description = newDescription;
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderGallery();
+                alert('✓ Элемент обновлен!');
+            }
+        }
+
+        function deleteElement(id) {
+            elements = elements.filter(el => el.id !== id);
+            localStorage.setItem('danceElements', JSON.stringify(elements));
+            renderCategories();
+            renderGallery();
+            updateStats();
+            alert('✓ Элемент удален!');
+        }
+
+        // ===== Обновление статистики =====
+        function updateStats() {
+            document.getElementById('elementsCount').textContent = elements.length;
+            document.getElementById('categoriesCount').textContent = new Set(elements.map(el => el.category)).size;
+        }
+
+        // ===== Инициализация =====
+        renderCategories();
+        renderGallery();
+        updateStats();
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мираж - платформа для изучения танца</title>
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #4CA1AF;
+            --accent-color: #e74c3c;
+            --text-color: #1f2937;
+            --bg-color: #ffffff;
+            --card-bg: #f3f4f6;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --text-color: #f3f4f6;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --nav-bg: rgba(17, 24, 39, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            padding-top: 70px;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            padding: 0.5rem 1.2rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .mode-toggle:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .mode-toggle.admin {
+            background: var(--accent-color);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem 0.7rem;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(20deg);
+        }
+
+        /* Контейнеры */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Главная секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: var(--transition);
+            border: 2px solid white;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Секции */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        /* Информационная секция */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Категории по центру */
+        .categories-section {
+            text-align: center;
+        }
+
+        .categories-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .category-btn {
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .category-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .category-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Галерея */
+        .gallery-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .element-card {
+            background: var(--bg-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .element-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .element-media {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .element-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .element-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .element-category {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-description {
+            color: #666;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .element-controls {
+            display: none;
+            gap: 0.5rem;
+        }
+
+        .element-controls.visible {
+            display: flex;
+        }
+
+        .btn-small {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .btn-edit {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Админ панель */
+        .admin-panel {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 2rem;
+        }
+
+        .admin-panel.visible {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(76, 161, 175, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* О платформе */
+        .about-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 3rem;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Мобильная адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                gap: 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .categories-grid {
+                gap: 1rem;
+            }
+
+            .category-btn {
+                min-width: 150px;
+                padding: 0.8rem 1rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .element-media {
+                height: 180px;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-section {
+                padding: 1.5rem;
+            }
+
+            .about-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="logo">Мираж</div>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#elements">Элементы</a></li>
+            <li><a href="#about">О сервисе</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="nav-controls">
+            <button class="mode-toggle" id="modeToggle">Ученик</button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Главная секция -->
+    <section class="hero" id="home">
+        <h1>Мираж</h1>
+        <p>Полнофункциональная платформа для изучения и совершенствования танцевальных элементов под руководством профессионалов</p>
+        <div class="cta-buttons">
+            <a href="#elements" class="btn">Начать обучение</a>
+            <a href="#about" class="btn secondary">Узнать подробнее</a>
+        </div>
+    </section>
+
+    <!-- Админ панель -->
+    <div class="admin-panel" id="adminPanel">
+        <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Админ-панель</h2>
+        <form id="uploadForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="fileInput">Загрузить медиафайл (фото/видео)</label>
+                    <input type="file" id="fileInput" accept="image/*,video/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="categorySelect">Категория</label>
+                    <select id="categorySelect" required>
+                        <option value="">Выберите категорию</option>
+                        <option value="станок">Элементы на станке</option>
+                        <option value="партер">Элементы в партере</option>
+                        <option value="прыжки">Прыжки</option>
+                        <option value="повороты">Повороты</option>
+                        <option value="растяжка">Растяжка</option>
+                        <option value="другое">Другое</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionInput">Описание элемента</label>
+                <textarea id="descriptionInput" placeholder="Введите описание техники выполнения, рекомендации, сложность..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Загрузить элемент</button>
+        </form>
+    </div>
+
+    <!-- Секция элементов -->
+    <section id="elements">
+        <div class="container">
+            <h2 class="section-title">Танцевальные элементы</h2>
+            
+            <div class="categories-section">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Выберите категорию</h3>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Категории будут добавлены динамически -->
+                </div>
+            </div>
+
+            <div class="gallery-section">
+                <h3 style="color: var(--primary-color);" id="galleryTitle">Все элементы</h3>
+                <div class="gallery-container" id="galleryContainer">
+                    <!-- Элементы будут добавлены динамически -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О сервисе -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">О платформе Мираж</h2>
+            
+            <div class="about-section">
+                <h2>Ваше пространство для танца</h2>
+                <p>Мираж — это современная платформа, которая объединяет учеников и педагогов под одной крышей. Здесь вы найдёте полную библиотеку танцевальных элементов, отсортированные по категориям, с подробными описаниями и рекомендациями от профессионалов.</p>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary-color); margin: 3rem 0 2rem;">Почему Мираж?</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📚 Полная библиотека</h3>
+                    <p>Огромная коллекция танцевальных элементов, от базовых до продвинутых уровней</p>
+                </div>
+                <div class="info-card">
+                    <h3>👨‍🏫 Руководство экспертов</h3>
+                    <p>Детальные описания и рекомендации от опытных хореографов</p>
+                </div>
+                <div class="info-card">
+                    <h3>📱 Доступность</h3>
+                    <p>Учитесь когда угодно и где угодно на любом устройстве</p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary-color); margin: 3rem 0 2rem;">Статистика</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="elementsCount">0</div>
+                    <div class="stat-label">Загруженных элементов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="categoriesCount">0</div>
+                    <div class="stat-label">Категорий</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Доступ к материалам</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📧 Email</h3>
+                    <p>info@mirage-dance.ru</p>
+                </div>
+                <div class="info-card">
+                    <h3>📱 Телефон</h3>
+                    <p>+7 (999) 123-45-67</p>
+                </div>
+                <div class="info-card">
+                    <h3>📍 Локация</h3>
+                    <p>г. Москва, ул. Танца, д. 1</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2024 Мираж. Все права защищены.</p>
+        <p>Платформа для обучения танцевальным элементам | <a href="#home">Наверх</a></p>
+    </footer>
+
+    <script>
+        let isAdmin = false;
+        let elements = JSON.parse(localStorage.getItem('danceElements')) || [];
+        let currentCategory = null;
+
+        // ===== Переключение темы =====
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Загрузка сохранённой темы
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        // ===== Переключение режима =====
+        const modeToggle = document.getElementById('modeToggle');
+        const adminPanel = document.getElementById('adminPanel');
+
+        modeToggle.addEventListener('click', () => {
+            isAdmin = !isAdmin;
+            modeToggle.textContent = isAdmin ? 'Администратор' : 'Ученик';
+            modeToggle.classList.toggle('admin');
+            adminPanel.classList.toggle('visible');
+            renderGallery();
+        });
+
+        // ===== Загрузка файла =====
+        const uploadForm = document.getElementById('uploadForm');
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const descriptionInput = document.getElementById('descriptionInput');
+            const categorySelect = document.getElementById('categorySelect');
+
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const element = {
+                    id: Date.now(),
+                    type: file.type.startsWith('image/') ? 'image' : 'video',
+                    dataUrl: e.target.result,
+                    description: descriptionInput.value,
+                    category: categorySelect.value
+                };
+                elements.push(element);
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderCategories();
+                renderGallery();
+                updateStats();
+                uploadForm.reset();
+                alert('✓ Элемент успешно загружен!');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ===== Рендер категорий =====
+        function renderCategories() {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            const categories = [...new Set(elements.map(el => el.category))];
+            
+            categoriesGrid.innerHTML = '<button class="category-btn active" data-category="">Все элементы</button>' + 
+                categories.map(cat => 
+                    `<button class="category-btn" data-category="${cat}">${getCategoryName(cat)}</button>`
+                ).join('');
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.dataset.category;
+                    renderGallery();
+                });
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                'станок': '🎭 Элементы на станке',
+                'партер': '⬇️ Элементы в партере',
+                'прыжки': '🦘 Прыжки',
+                'повороты': '🌀 Повороты',
+                'растяжка': '🧘 Растяжка',
+                'другое': '✨ Другое'
+            };
+            return names[cat] || cat;
+        }
+
+        // ===== Рендер галереи =====
+        function renderGallery() {
+            const galleryContainer = document.getElementById('galleryContainer');
+            const galleryTitle = document.getElementById('galleryTitle');
+            const filteredElements = currentCategory ? elements.filter(el => el.category === currentCategory) : elements;
+            
+            if (currentCategory) {
+                galleryTitle.textContent = getCategoryName(currentCategory);
+            } else {
+                galleryTitle.textContent = 'Все элементы';
+            }
+
+            if (filteredElements.length === 0) {
+                galleryContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Элементов в этой категории нет</div>';
+                return;
+            }
+
+            galleryContainer.innerHTML = filteredElements.map(el => `
+                <div class="element-card">
+                    ${el.type === 'image' ? 
+                        `<img src="${el.dataUrl}" alt="${el.description}" class="element-media">` :
+                        `<video src="${el.dataUrl}" controls class="element-media"></video>`
+                    }
+                    <div class="element-info">
+                        <div class="element-category">${getCategoryName(el.category)}</div>
+                        <h3>${el.description.substring(0, 50)}${el.description.length > 50 ? '...' : ''}</h3>
+                        <div class="element-description">${el.description}</div>
+                        <div class="element-controls ${isAdmin ? 'visible' : ''}">
+                            <button class="btn-small btn-edit" data-id="${el.id}">Редактировать</button>
+                            <button class="btn-small btn-delete" data-id="${el.id}">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Обработчики редактирования и удаления
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    editElement(id);
+                });
+            });
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm('Вы уверены? Это действие нельзя отменить.')) {
+                        deleteElement(id);
+                    }
+                });
+            });
+        }
+
+        function editElement(id) {
+            const element = elements.find(el => el.id === id);
+            if (!element) return;
+
+            const newDescription = prompt('Отредактируйте описание:', element.description);
+            if (newDescription !== null && newDescription.trim()) {
+                element.description = newDescription;
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderGallery();
+                alert('✓ Элемент обновлен!');
+            }
+        }
+
+        function deleteElement(id) {
+            elements = elements.filter(el => el.id !== id);
+            localStorage.setItem('danceElements', JSON.stringify(elements));
+            renderCategories();
+            renderGallery();
+            updateStats();
+            alert('✓ Элемент удален!');
+        }
+
+        // ===== Обновление статистики =====
+        function updateStats() {
+            document.getElementById('elementsCount').textContent = elements.length;
+            document.getElementById('categoriesCount').textContent = new Set(elements.map(el => el.category)).size;
+        }
+
+        // ===== Инициализация =====
+        renderCategories();
+        renderGallery();
+        updateStats();
+    </script>
+</body>
+</html>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            padding-top: 70px;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            padding: 0.5rem 1.2rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .mode-toggle:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .mode-toggle.admin {
+            background: var(--accent-color);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem 0.7rem;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(20deg);
+        }
+
+        /* Контейнеры */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Главная секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: var(--transition);
+            border: 2px solid white;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: white;
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Секции */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+
+        /* Информационная секция */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Категории по центру */
+        .categories-section {
+            text-align: center;
+        }
+
+        .categories-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .category-btn {
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .category-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .category-btn.active {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Галерея */
+        .gallery-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .element-card {
+            background: var(--bg-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .element-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .element-media {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .element-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .element-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .element-category {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-description {
+            color: #666;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .element-controls {
+            display: none;
+            gap: 0.5rem;
+        }
+
+        .element-controls.visible {
+            display: flex;
+        }
+
+        .btn-small {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .btn-edit {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Админ панель */
+        .admin-panel {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 2rem;
+        }
+
+        .admin-panel.visible {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(76, 161, 175, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* О платформе */
+        .about-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 3rem;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Мобильная адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                gap: 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .categories-grid {
+                gap: 1rem;
+            }
+
+            .category-btn {
+                min-width: 150px;
+                padding: 0.8rem 1rem;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .element-media {
+                height: 180px;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-section {
+                padding: 1.5rem;
+            }
+
+            .about-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .about-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="logo">Мираж</div>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#elements">Элементы</a></li>
+            <li><a href="#about">О сервисе</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="nav-controls">
+            <button class="mode-toggle" id="modeToggle">Ученик</button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Главная секция -->
+    <section class="hero" id="home">
+        <h1>Мираж</h1>
+        <p>Полнофункциональная платформа для изучения и совершенствования танцевальных элементов под руководством профессионалов</p>
+        <div class="cta-buttons">
+            <a href="#elements" class="btn">Начать обучение</a>
+            <a href="#about" class="btn secondary">Узнать подробнее</a>
+        </div>
+    </section>
+
+    <!-- Админ панель -->
+    <div class="admin-panel" id="adminPanel">
+        <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Админ-панель</h2>
+        <form id="uploadForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="fileInput">Загрузить медиафайл (фото/видео)</label>
+                    <input type="file" id="fileInput" accept="image/*,video/*" required>
+                </div>
+                <div class="form-group">
+                    <label for="categorySelect">Категория</label>
+                    <select id="categorySelect" required>
+                        <option value="">Выберите категорию</option>
+                        <option value="станок">Элементы на станке</option>
+                        <option value="партер">Элементы в партере</option>
+                        <option value="прыжки">Прыжки</option>
+                        <option value="повороты">Повороты</option>
+                        <option value="растяжка">Растяжка</option>
+                        <option value="другое">Другое</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionInput">Описание элемента</label>
+                <textarea id="descriptionInput" placeholder="Введите описание техники выполнения, рекомендации, сложность..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Загрузить элемент</button>
+        </form>
+    </div>
+
+    <!-- Секция элементов -->
+    <section id="elements">
+        <div class="container">
+            <h2 class="section-title">Танцевальные элементы</h2>
+            
+            <div class="categories-section">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Выберите категорию</h3>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Категории будут добавлены динамически -->
+                </div>
+            </div>
+
+            <div class="gallery-section">
+                <h3 style="color: var(--primary-color);" id="galleryTitle">Все элементы</h3>
+                <div class="gallery-container" id="galleryContainer">
+                    <!-- Элементы будут добавлены динамически -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О сервисе -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">О платформе Мираж</h2>
+            
+            <div class="about-section">
+                <h2>Ваше пространство для танца</h2>
+                <p>Мираж — это современная платформа, которая объединяет учеников и педагогов под одной крышей. Здесь вы найдёте полную библиотеку танцевальных элементов, отсортированные по категориям, с подробными описаниями и рекомендациями от профессионалов.</p>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary-color); margin: 3rem 0 2rem;">Почему Мираж?</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📚 Полная библиотека</h3>
+                    <p>Огромная коллекция танцевальных элементов, от базовых до продвинутых уровней</p>
+                </div>
+                <div class="info-card">
+                    <h3>👨‍🏫 Руководство экспертов</h3>
+                    <p>Детальные описания и рекомендации от опытных хореографов</p>
+                </div>
+                <div class="info-card">
+                    <h3>📱 Доступность</h3>
+                    <p>Учитесь когда угодно и где угодно на любом устройстве</p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; color: var(--primary-color); margin: 3rem 0 2rem;">Статистика</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="elementsCount">0</div>
+                    <div class="stat-label">Загруженных элементов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="categoriesCount">0</div>
+                    <div class="stat-label">Категорий</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Доступ к материалам</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Свяжитесь с нами</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📧 Email</h3>
+                    <p>info@mirage-dance.ru</p>
+                </div>
+                <div class="info-card">
+                    <h3>📱 Телефон</h3>
+                    <p>+7 (999) 123-45-67</p>
+                </div>
+                <div class="info-card">
+                    <h3>📍 Локация</h3>
+                    <p>г. Москва, ул. Танца, д. 1</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2024 Мираж. Все права защищены.</p>
+        <p>Платформа для обучения танцевальным элементам | <a href="#home">Наверх</a></p>
+    </footer>
+
+    <script>
+        let isAdmin = false;
+        let elements = JSON.parse(localStorage.getItem('danceElements')) || [];
+        let currentCategory = null;
+
+        // ===== Переключение темы =====
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Загрузка сохранённой темы
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        // ===== Переключение режима =====
+        const modeToggle = document.getElementById('modeToggle');
+        const adminPanel = document.getElementById('adminPanel');
+
+        modeToggle.addEventListener('click', () => {
+            isAdmin = !isAdmin;
+            modeToggle.textContent = isAdmin ? 'Администратор' : 'Ученик';
+            modeToggle.classList.toggle('admin');
+            adminPanel.classList.toggle('visible');
+            renderGallery();
+        });
+
+        // ===== Загрузка файла =====
+        const uploadForm = document.getElementById('uploadForm');
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const descriptionInput = document.getElementById('descriptionInput');
+            const categorySelect = document.getElementById('categorySelect');
+
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const element = {
+                    id: Date.now(),
+                    type: file.type.startsWith('image/') ? 'image' : 'video',
+                    dataUrl: e.target.result,
+                    description: descriptionInput.value,
+                    category: categorySelect.value
+                };
+                elements.push(element);
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderCategories();
+                renderGallery();
+                updateStats();
+                uploadForm.reset();
+                alert('✓ Элемент успешно загружен!');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // ===== Рендер категорий =====
+        function renderCategories() {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            const categories = [...new Set(elements.map(el => el.category))];
+            
+            categoriesGrid.innerHTML = '<button class="category-btn active" data-category="">Все элементы</button>' + 
+                categories.map(cat => 
+                    `<button class="category-btn" data-category="${cat}">${getCategoryName(cat)}</button>`
+                ).join('');
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.dataset.category;
+                    renderGallery();
+                });
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                'станок': '🎭 Элементы на станке',
+                'партер': '⬇️ Элементы в партере',
+                'прыжки': '🦘 Прыжки',
+                'повороты': '🌀 Повороты',
+                'растяжка': '🧘 Растяжка',
+                'другое': '✨ Другое'
+            };
+            return names[cat] || cat;
+        }
+
+        // ===== Рендер галереи =====
+        function renderGallery() {
+            const galleryContainer = document.getElementById('galleryContainer');
+            const galleryTitle = document.getElementById('galleryTitle');
+            const filteredElements = currentCategory ? elements.filter(el => el.category === currentCategory) : elements;
+            
+            if (currentCategory) {
+                galleryTitle.textContent = getCategoryName(currentCategory);
+            } else {
+                galleryTitle.textContent = 'Все элементы';
+            }
+
+            if (filteredElements.length === 0) {
+                galleryContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #999;">Элементов в этой категории нет</div>';
+                return;
+            }
+
+            galleryContainer.innerHTML = filteredElements.map(el => `
+                <div class="element-card">
+                    ${el.type === 'image' ? 
+                        `<img src="${el.dataUrl}" alt="${el.description}" class="element-media">` :
+                        `<video src="${el.dataUrl}" controls class="element-media"></video>`
+                    }
+                    <div class="element-info">
+                        <div class="element-category">${getCategoryName(el.category)}</div>
+                        <h3>${el.description.substring(0, 50)}${el.description.length > 50 ? '...' : ''}</h3>
+                        <div class="element-description">${el.description}</div>
+                        <div class="element-controls ${isAdmin ? 'visible' : ''}">
+                            <button class="btn-small btn-edit" data-id="${el.id}">Редактировать</button>
+                            <button class="btn-small btn-delete" data-id="${el.id}">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Обработчики редактирования и удаления
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    editElement(id);
+                });
+            });
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm('Вы уверены? Это действие нельзя отменить.')) {
+                        deleteElement(id);
+                    }
+                });
+            });
+        }
+
+        function editElement(id) {
+            const element = elements.find(el => el.id === id);
+            if (!element) return;
+
+            const newDescription = prompt('Отредактируйте описание:', element.description);
+            if (newDescription !== null && newDescription.trim()) {
+                element.description = newDescription;
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderGallery();
+                alert('✓ Элемент обновлен!');
+            }
+        }
+
+        function deleteElement(id) {
+            elements = elements.filter(el => el.id !== id);
+            localStorage.setItem('danceElements', JSON.stringify(elements));
+            renderCategories();
+            renderGallery();
+            updateStats();
+            alert('✓ Элемент удален!');
+        }
+
+        // ===== Обновление статистики =====
+        function updateStats() {
+            document.getElementById('elementsCount').textContent = elements.length;
+            document.getElementById('categoriesCount').textContent = new Set(elements.map(el => el.category)).size;
+        }
+
+        // ===== Инициализация =====
+        renderCategories();
+        renderGallery();
+        updateStats();
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мираж - платформа для изучения танца</title>
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #4CA1AF;
             --text-color: #1f2937;
             --bg-color: #ffffff;
             --card-bg: #f3f4f6;
@@ -72,6 +2838,28 @@
 
         .nav-links a:hover {
             color: var(--primary-color);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .mode-toggle:hover {
+            background: var(--primary-color);
+            color: white;
         }
 
         .theme-toggle {
@@ -164,8 +2952,12 @@
             color: var(--primary-color);
         }
 
-        /* Контакты */
-        .contact-form {
+        /* Загрузка */
+        .upload-section {
+            display: none; /* Скрыто по умолчанию для учеников */
+        }
+
+        .upload-form {
             max-width: 500px;
             margin: 0 auto;
             display: flex;
@@ -173,7 +2965,7 @@
             gap: 1rem;
         }
 
-        input, textarea {
+        .upload-form input, .upload-form select {
             padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
@@ -182,7 +2974,7 @@
             color: var(--text-color);
         }
 
-        button[type="submit"] {
+        .upload-form button {
             padding: 1rem;
             background: var(--primary-color);
             color: white;
@@ -193,8 +2985,96 @@
             transition: var(--transition);
         }
 
-        button[type="submit"]:hover {
+        .upload-form button:hover {
             background: var(--secondary-color);
+        }
+
+        /* Категории */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .category-btn {
+            padding: 1rem;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .category-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Галерея */
+        .gallery-container {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem;
+            scroll-behavior: smooth;
+        }
+
+        .element-card {
+            min-width: 300px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .element-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .element-media {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .element-description {
+            padding: 1rem;
+        }
+
+        .element-description h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .edit-controls {
+            display: none; /* Скрыто для учеников */
+            margin-top: 0.5rem;
+        }
+
+        .edit-btn, .delete-btn {
+            padding: 0.5rem;
+            margin-right: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
         }
 
         /* Футер */
@@ -226,73 +3106,90 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
+
+            .gallery-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .element-card {
+                min-width: 280px;
+            }
+
+            .nav-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Навигация -->
     <nav>
-        <div class="logo">MyWebsite</div>
+        <div class="logo">Танцевальные элементы</div>
         <ul class="nav-links">
             <li><a href="#home">Главная</a></li>
-            <li><a href="#about">О нас</a></li>
-            <li><a href="#services">Услуги</a></li>
-            <li><a href="#contact">Контакты</a></li>
+            <li><a href="#upload" id="uploadLink">Загрузка</a></li>
+            <li><a href="#categories">Категории</a></li>
+            <li><a href="#gallery">Галерея</a></li>
         </ul>
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+        <div class="nav-controls">
+            <button class="mode-toggle" id="modeToggle">Ученик</button>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
     </nav>
 
     <!-- Герой-секция -->
     <section class="hero" id="home">
-        <h1>Добро пожаловать</h1>
-        <p>Мы создаем современные цифровые решения для вашего бизнеса. Качество, скорость и инновации — наши главные приоритеты.</p>
-        <a href="#contact" class="btn">Начать проект</a>
+        <h1>Танцевальные элементы</h1>
+        <p>Платформа для изучения и совершенствования танцевальных элементов. Загружайте, просматривайте и исправляйте элементы в удобном интерфейсе.</p>
+        <a href="#categories" class="btn">Начать просмотр</a>
     </section>
 
-    <!-- О нас -->
-    <section id="about">
-        <h2 class="section-title">О нас</h2>
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <p>Мы — команда энтузиастов, стремящихся сделать мир лучше через технологии. Наш опыт охватывает различные области веб-разработки, дизайна и цифрового маркетинга.</p>
-        </div>
-    </section>
-
-    <!-- Услуги -->
-    <section id="services">
-        <h2 class="section-title">Наши услуги</h2>
-        <div class="services-grid">
-            <div class="card">
-                <h3>Веб-разработка</h3>
-                <p>Создание современных, быстрых и адаптивных сайтов любой сложности.</p>
-            </div>
-            <div class="card">
-                <h3>UI/UX Дизайн</h3>
-                <p>Проектирование удобных и красивых интерфейсов для ваших пользователей.</p>
-            </div>
-            <div class="card">
-                <h3>SEO Оптимизация</h3>
-                <p>Улучшение видимости вашего сайта в поисковых системах.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Контакты -->
-    <section id="contact">
-        <h2 class="section-title">Свяжитесь с нами</h2>
-        <form class="contact-form" id="contactForm">
-            <input type="text" placeholder="Ваше имя" required>
-            <input type="email" placeholder="Ваш Email" required>
-            <textarea rows="5" placeholder="Ваше сообщение" required></textarea>
-            <button type="submit">Отправить</button>
+    <!-- Загрузка -->
+    <section id="upload" class="upload-section">
+        <h2 class="section-title">Загрузка элементов</h2>
+        <form class="upload-form" id="uploadForm">
+            <input type="file" id="fileInput" accept="image/*,video/*" required>
+            <input type="text" id="descriptionInput" placeholder="Описание элемента" required>
+            <select id="categorySelect" required>
+                <option value="">Выберите категорию</option>
+                <option value="станок">Элементы на станке</option>
+                <option value="партер">Элементы в партере</option>
+                <option value="прыжки">Прыжки</option>
+                <option value="повороты">Повороты</option>
+                <option value="другое">Другое</option>
+            </select>
+            <button type="submit">Загрузить</button>
         </form>
+    </section>
+
+    <!-- Категории -->
+    <section id="categories">
+        <h2 class="section-title">Категории</h2>
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Категории будут добавлены динамически -->
+        </div>
+    </section>
+
+    <!-- Галерея -->
+    <section id="gallery">
+        <h2 class="section-title">Галерея элементов</h2>
+        <div class="gallery-container" id="galleryContainer">
+            <!-- Элементы будут добавлены динамически -->
+        </div>
     </section>
 
     <!-- Футер -->
     <footer>
-        <p>&copy; 2023 MyWebsite. Все права защищены.</p>
+        <p>&copy; 2024 Танцевальные элементы. Все права защищены.</p>
     </footer>
 
     <script>
+        let isChoreographer = false;
+        let elements = JSON.parse(localStorage.getItem('danceElements')) || [];
+        let currentCategory = null;
+
         // Переключение темы
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
@@ -304,6 +3201,133 @@
             themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
         });
 
+        // Переключение режима
+        const modeToggle = document.getElementById('modeToggle');
+        const uploadSection = document.getElementById('upload');
+        const uploadLink = document.getElementById('uploadLink');
+
+        modeToggle.addEventListener('click', () => {
+            isChoreographer = !isChoreographer;
+            modeToggle.textContent = isChoreographer ? 'Хореограф' : 'Ученик';
+            uploadSection.style.display = isChoreographer ? 'block' : 'none';
+            uploadLink.style.display = isChoreographer ? 'inline' : 'none';
+            renderGallery();
+        });
+
+        // Загрузка файла
+        const uploadForm = document.getElementById('uploadForm');
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const descriptionInput = document.getElementById('descriptionInput');
+            const categorySelect = document.getElementById('categorySelect');
+
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const element = {
+                    id: Date.now(),
+                    type: file.type.startsWith('image/') ? 'image' : 'video',
+                    dataUrl: e.target.result,
+                    description: descriptionInput.value,
+                    category: categorySelect.value
+                };
+                elements.push(element);
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderCategories();
+                renderGallery();
+                uploadForm.reset();
+                alert('Элемент загружен!');
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Рендер категорий
+        function renderCategories() {
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            const categories = [...new Set(elements.map(el => el.category))];
+            categoriesGrid.innerHTML = categories.map(cat => 
+                `<button class="category-btn" data-category="${cat}">${getCategoryName(cat)}</button>`
+            ).join('');
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentCategory = btn.dataset.category;
+                    renderGallery();
+                });
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                'станок': 'Элементы на станке',
+                'партер': 'Элементы в партере',
+                'прыжки': 'Прыжки',
+                'повороты': 'Повороты',
+                'другое': 'Другое'
+            };
+            return names[cat] || cat;
+        }
+
+        // Рендер галереи
+        function renderGallery() {
+            const galleryContainer = document.getElementById('galleryContainer');
+            const filteredElements = currentCategory ? elements.filter(el => el.category === currentCategory) : elements;
+            galleryContainer.innerHTML = filteredElements.map(el => `
+                <div class="element-card">
+                    ${el.type === 'image' ? 
+                        `<img src="${el.dataUrl}" alt="${el.description}" class="element-media">` :
+                        `<video src="${el.dataUrl}" controls class="element-media"></video>`
+                    }
+                    <div class="element-description">
+                        <h3>${el.description}</h3>
+                        <div class="edit-controls" style="display: ${isChoreographer ? 'block' : 'none'}">
+                            <button class="edit-btn" data-id="${el.id}">Редактировать</button>
+                            <button class="delete-btn" data-id="${el.id}">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Обработчики для редактирования и удаления
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    editElement(id);
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm('Удалить элемент?')) {
+                        deleteElement(id);
+                    }
+                });
+            });
+        }
+
+        function editElement(id) {
+            const element = elements.find(el => el.id === id);
+            if (!element) return;
+
+            const newDescription = prompt('Новое описание:', element.description);
+            if (newDescription !== null) {
+                element.description = newDescription;
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderGallery();
+            }
+        }
+
+        function deleteElement(id) {
+            elements = elements.filter(el => el.id !== id);
+            localStorage.setItem('danceElements', JSON.stringify(elements));
+            renderCategories();
+            renderGallery();
+        }
+
         // Плавная прокрутка
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -314,29 +3338,9 @@
             });
         });
 
-        // Обработка формы
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
-            e.target.reset();
-        });
-
-        // Анимация при скролле
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.6s ease';
-            observer.observe(card);
-        });
+        // Инициализация
+        renderCategories();
+        renderGallery();
     </script>
 </body>
 </html>
