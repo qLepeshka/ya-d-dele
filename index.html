@@ -3,23 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Современный Сайт</title>
+    <title>Мираж - Танцевальные Элементы</title>
     <style>
         :root {
-            --primary-color: #3b82f6;
-            --secondary-color: #1e40af;
-            --text-color: #1f2937;
-            --bg-color: #ffffff;
-            --card-bg: #f3f4f6;
-            --nav-bg: rgba(255, 255, 255, 0.9);
+            --primary-color: #2C3E50;
+            --secondary-color: #4CA1AF;
+            --text-color: #2C3E50;
+            --bg-color: #f5f6fa;
+            --card-bg: #ffffff;
+            --white: #ffffff;
             --transition: all 0.3s ease;
-        }
-
-        [data-theme="dark"] {
-            --text-color: #f3f4f6;
-            --bg-color: #111827;
-            --card-bg: #1f2937;
-            --nav-bg: rgba(17, 24, 39, 0.9);
         }
 
         * {
@@ -41,64 +34,80 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: var(--nav-bg);
-            backdrop-filter: blur(10px);
+            background: var(--primary-color);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--secondary-color);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--white);
             font-weight: 500;
             transition: var(--transition);
         }
 
         .nav-links a:hover {
-            color: var(--primary-color);
+            color: var(--secondary-color);
         }
 
-        .theme-toggle {
+        .role-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .role-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--secondary-color);
+            background: transparent;
+            color: var(--white);
+            border-radius: 25px;
             cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: none;
-            color: var(--text-color);
-            font-size: 1.2rem;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .role-btn.active {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .role-btn:hover {
+            background: var(--secondary-color);
+            color: var(--white);
         }
 
         /* Герой-секция */
         .hero {
-            height: 100vh;
+            min-height: 40vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 1rem;
+            padding: 6rem 1rem 3rem;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            color: var(--white);
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
             animation: fadeInUp 1s ease;
         }
@@ -106,103 +115,331 @@
         .hero p {
             font-size: 1.2rem;
             max-width: 600px;
-            margin-bottom: 2rem;
             opacity: 0.9;
             animation: fadeInUp 1s ease 0.2s backwards;
         }
 
-        .btn {
-            padding: 1rem 2rem;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: var(--transition);
-            animation: fadeInUp 1s ease 0.4s backwards;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
         /* Секции */
         section {
-            padding: 5rem 10%;
+            padding: 3rem 5%;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+            font-size: 2rem;
+            margin-bottom: 2rem;
             color: var(--primary-color);
         }
 
-        /* Услуги */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+        /* Категории */
+        .categories-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
         }
 
-        .card {
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Сетка элементов */
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .element-card {
             background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: var(--transition);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .element-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .card h3 {
-            margin-bottom: 1rem;
+        .element-media {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+        }
+
+        .element-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .element-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .element-info {
+            padding: 1.5rem;
+        }
+
+        .element-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
             color: var(--primary-color);
         }
 
-        /* Контакты */
-        .contact-form {
-            max-width: 500px;
-            margin: 0 auto;
+        .element-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .element-actions {
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
-        input, textarea {
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: inherit;
-            background: var(--card-bg);
-            color: var(--text-color);
-        }
-
-        button[type="submit"] {
-            padding: 1rem;
-            background: var(--primary-color);
-            color: white;
+        .btn {
+            padding: 0.5rem 1rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
             transition: var(--transition);
         }
 
-        button[type="submit"]:hover {
-            background: var(--secondary-color);
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
         }
 
-        /* Футер */
-        footer {
-            text-align: center;
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: var(--white);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        /* Модальное окно загрузки */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
             padding: 2rem;
-            background: var(--card-bg);
-            margin-top: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: var(--primary-color);
+        }
+
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Кнопка добавления */
+        .add-element-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: var(--transition);
+            z-index: 900;
+        }
+
+        .add-element-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-color);
+        }
+
+        /* Просмотр элемента */
+        .viewer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .viewer-modal.active {
+            display: flex;
+        }
+
+        .viewer-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .viewer-content img,
+        .viewer-content video {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+        }
+
+        .viewer-info {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 0 0 10px 10px;
+            margin-top: -5px;
+        }
+
+        .viewer-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .viewer-nav.prev {
+            left: 2rem;
+        }
+
+        .viewer-nav.next {
+            right: 2rem;
+        }
+
+        .viewer-nav:hover {
+            background: var(--primary-color);
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         /* Анимации */
@@ -224,119 +461,423 @@
             }
             
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
+
+            .elements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .viewer-nav {
+                padding: 0.5rem;
+                font-size: 1.2rem;
+            }
+
+            .viewer-nav.prev {
+                left: 0.5rem;
+            }
+
+            .viewer-nav.next {
+                right: 0.5rem;
+            }
+        }
+
+        /* Сообщение когда нет элементов */
+        .no-elements {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        /* Чекбокс для режима хореографа */
+        .choreographer-controls {
+            display: none;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .choreographer-mode .choreographer-controls {
+            display: flex;
         }
     </style>
 </head>
 <body>
     <!-- Навигация -->
     <nav>
-        <div class="logo">MyWebsite</div>
+        <div class="logo">💃 Мираж</div>
         <ul class="nav-links">
             <li><a href="#home">Главная</a></li>
-            <li><a href="#about">О нас</a></li>
-            <li><a href="#services">Услуги</a></li>
-            <li><a href="#contact">Контакты</a></li>
+            <li><a href="#elements">Элементы</a></li>
         </ul>
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+        <div class="role-selector">
+            <button class="role-btn active" data-role="student">Ученик</button>
+            <button class="role-btn" data-role="choreographer">Хореограф</button>
+        </div>
     </nav>
 
     <!-- Герой-секция -->
     <section class="hero" id="home">
-        <h1>Добро пожаловать</h1>
-        <p>Мы создаем современные цифровые решения для вашего бизнеса. Качество, скорость и инновации — наши главные приоритеты.</p>
-        <a href="#contact" class="btn">Начать проект</a>
+        <h1>Мираж</h1>
+        <p>Изучайте танцевальные элементы по категориям. Смотрите, практикуйтесь и совершенствуйте своё мастерство!</p>
     </section>
 
-    <!-- О нас -->
-    <section id="about">
-        <h2 class="section-title">О нас</h2>
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <p>Мы — команда энтузиастов, стремящихся сделать мир лучше через технологии. Наш опыт охватывает различные области веб-разработки, дизайна и цифрового маркетинга.</p>
+    <!-- Секция элементов -->
+    <section id="elements">
+        <h2 class="section-title">Танцевальные Элементы</h2>
+        
+        <!-- Фильтр категорий -->
+        <div class="categories-container" id="categoriesFilter">
+            <button class="category-btn active" data-category="all">Все</button>
+            <button class="category-btn" data-category="ballet">Балет</button>
+            <button class="category-btn" data-category="modern">Модерн</button>
+            <button class="category-btn" data-category="jazz">Джаз</button>
+            <button class="category-btn" data-category="contemporary">Контемпорари</button>
+            <button class="category-btn" data-category="hiphop">Хип-хоп</button>
+            <button class="category-btn" data-category="stretch">Растяжка</button>
+        </div>
+
+        <!-- Сетка элементов -->
+        <div class="elements-grid" id="elementsGrid">
+            <!-- Элементы будут загружены здесь -->
+        </div>
+
+        <div class="no-elements" id="noElements" style="display: none;">
+            <p>Пока нет элементов в этой категории. Добавьте первый элемент!</p>
         </div>
     </section>
 
-    <!-- Услуги -->
-    <section id="services">
-        <h2 class="section-title">Наши услуги</h2>
-        <div class="services-grid">
-            <div class="card">
-                <h3>Веб-разработка</h3>
-                <p>Создание современных, быстрых и адаптивных сайтов любой сложности.</p>
+    <!-- Кнопка добавления (только для хореографа) -->
+    <button class="add-element-btn" id="addElementBtn" style="display: none;">+</button>
+
+    <!-- Модальное окно добавления/редактирования -->
+    <div class="modal" id="elementModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Добавить элемент</h2>
+                <span class="close-modal">&times;</span>
             </div>
-            <div class="card">
-                <h3>UI/UX Дизайн</h3>
-                <p>Проектирование удобных и красивых интерфейсов для ваших пользователей.</p>
-            </div>
-            <div class="card">
-                <h3>SEO Оптимизация</h3>
-                <p>Улучшение видимости вашего сайта в поисковых системах.</p>
-            </div>
+            <form id="elementForm">
+                <input type="hidden" id="elementId">
+                <div class="form-group">
+                    <label for="elementTitle">Название элемента</label>
+                    <input type="text" id="elementTitle" required placeholder="Например: Гранд плие">
+                </div>
+                <div class="form-group">
+                    <label for="elementCategory">Категория</label>
+                    <select id="elementCategory" required>
+                        <option value="ballet">Балет</option>
+                        <option value="modern">Модерн</option>
+                        <option value="jazz">Джаз</option>
+                        <option value="contemporary">Контемпорари</option>
+                        <option value="hiphop">Хип-хоп</option>
+                        <option value="stretch">Растяжка</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="elementDescription">Описание</label>
+                    <textarea id="elementDescription" required placeholder="Опишите технику выполнения элемента..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="elementMedia">Загрузить фото или видео</label>
+                    <input type="file" id="elementMedia" accept="image/*,video/*" required>
+                    <small style="color: #666; display: block; margin-top: 0.5rem;">Поддерживаются форматы: JPG, PNG, GIF, MP4, WebM</small>
+                </div>
+                <div class="form-group">
+                    <label>Тип медиа</label>
+                    <select id="mediaType">
+                        <option value="image">Фото</option>
+                        <option value="video">Видео</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Сохранить</button>
+            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Контакты -->
-    <section id="contact">
-        <h2 class="section-title">Свяжитесь с нами</h2>
-        <form class="contact-form" id="contactForm">
-            <input type="text" placeholder="Ваше имя" required>
-            <input type="email" placeholder="Ваш Email" required>
-            <textarea rows="5" placeholder="Ваше сообщение" required></textarea>
-            <button type="submit">Отправить</button>
-        </form>
-    </section>
-
-    <!-- Футер -->
-    <footer>
-        <p>&copy; 2023 MyWebsite. Все права защищены.</p>
-    </footer>
+    <!-- Модальное окно просмотра -->
+    <div class="viewer-modal" id="viewerModal">
+        <button class="close-viewer" id="closeViewer">Закрыть</button>
+        <button class="viewer-nav prev" id="prevElement">&#10094;</button>
+        <div class="viewer-content" id="viewerContent">
+            <!-- Контент будет загружен здесь -->
+        </div>
+        <button class="viewer-nav next" id="nextElement">&#10095;</button>
+    </div>
 
     <script>
-        // Переключение темы
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
+        // Хранилище данных
+        let elements = JSON.parse(localStorage.getItem('danceElements')) || [];
+        let currentRole = 'student';
+        let currentCategory = 'all';
+        let currentViewIndex = 0;
+        let filteredElements = [];
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            renderElements();
+            setupEventListeners();
         });
 
-        // Плавная прокрутка
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Переключение роли
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentRole = e.target.dataset.role;
+                    updateRoleUI();
                 });
             });
-        });
 
-        // Обработка формы
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
-            e.target.reset();
-        });
+            // Фильтр категорий
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentCategory = e.target.dataset.category;
+                    renderElements();
+                });
+            });
 
-        // Анимация при скролле
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+            // Кнопка добавления элемента
+            document.getElementById('addElementBtn').addEventListener('click', () => {
+                openModal();
+            });
+
+            // Модальное окно
+            document.querySelector('.close-modal').addEventListener('click', closeModal);
+            document.getElementById('elementModal').addEventListener('click', (e) => {
+                if (e.target.id === 'elementModal') closeModal();
+            });
+
+            // Форма
+            document.getElementById('elementForm').addEventListener('submit', handleFormSubmit);
+
+            // Просмотрщик
+            document.getElementById('closeViewer').addEventListener('click', closeViewer);
+            document.getElementById('prevElement').addEventListener('click', showPrevElement);
+            document.getElementById('nextElement').addEventListener('click', showNextElement);
+            document.getElementById('viewerModal').addEventListener('click', (e) => {
+                if (e.target.id === 'viewerModal') closeViewer();
+            });
+
+            // Клавиши навигации
+            document.addEventListener('keydown', (e) => {
+                if (document.getElementById('viewerModal').classList.contains('active')) {
+                    if (e.key === 'ArrowLeft') showPrevElement();
+                    if (e.key === 'ArrowRight') showNextElement();
+                    if (e.key === 'Escape') closeViewer();
                 }
             });
-        }, { threshold: 0.1 });
+        }
 
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.6s ease';
-            observer.observe(card);
-        });
+        // Обновление UI в зависимости от роли
+        function updateRoleUI() {
+            const addBtn = document.getElementById('addElementBtn');
+            if (currentRole === 'choreographer') {
+                addBtn.style.display = 'block';
+                document.body.classList.add('choreographer-mode');
+            } else {
+                addBtn.style.display = 'none';
+                document.body.classList.remove('choreographer-mode');
+            }
+            renderElements();
+        }
+
+        // Рендеринг элементов
+        function renderElements() {
+            const grid = document.getElementById('elementsGrid');
+            const noElements = document.getElementById('noElements');
+            
+            filteredElements = currentCategory === 'all' 
+                ? elements 
+                : elements.filter(el => el.category === currentCategory);
+
+            if (filteredElements.length === 0) {
+                grid.innerHTML = '';
+                noElements.style.display = 'block';
+                return;
+            }
+
+            noElements.style.display = 'none';
+            grid.innerHTML = filteredElements.map((el, index) => `
+                <div class="element-card">
+                    <div class="element-media" onclick="openViewer(${elements.indexOf(el)})">
+                        ${el.mediaType === 'video' 
+                            ? `<video src="${el.media}" preload="metadata"></video>` 
+                            : `<img src="${el.media}" alt="${el.title}">`}
+                    </div>
+                    <div class="element-info">
+                        <span class="element-category">${getCategoryName(el.category)}</span>
+                        <h3 class="element-title">${el.title}</h3>
+                        <p class="element-description">${el.description}</p>
+                        <div class="element-actions">
+                            <button class="btn btn-primary" onclick="openViewer(${elements.indexOf(el)})">Просмотр</button>
+                            ${currentRole === 'choreographer' ? `
+                                <button class="btn btn-secondary" onclick="editElement(${elements.indexOf(el)})">Редактировать</button>
+                                <button class="btn btn-danger" onclick="deleteElement(${elements.indexOf(el)})">Удалить</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Получение названия категории
+        function getCategoryName(cat) {
+            const names = {
+                ballet: 'Балет',
+                modern: 'Модерн',
+                jazz: 'Джаз',
+                contemporary: 'Контемпорари',
+                hiphop: 'Хип-хоп',
+                stretch: 'Растяжка'
+            };
+            return names[cat] || cat;
+        }
+
+        // Открытие модального окна
+        function openModal(editIndex = null) {
+            const modal = document.getElementById('elementModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('elementForm');
+            
+            if (editIndex !== null) {
+                const el = elements[editIndex];
+                title.textContent = 'Редактировать элемент';
+                document.getElementById('elementId').value = editIndex;
+                document.getElementById('elementTitle').value = el.title;
+                document.getElementById('elementCategory').value = el.category;
+                document.getElementById('elementDescription').value = el.description;
+                document.getElementById('mediaType').value = el.mediaType;
+                document.getElementById('elementMedia').required = false;
+            } else {
+                title.textContent = 'Добавить элемент';
+                form.reset();
+                document.getElementById('elementId').value = '';
+                document.getElementById('elementMedia').required = true;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        // Закрытие модального окна
+        function closeModal() {
+            document.getElementById('elementModal').classList.remove('active');
+        }
+
+        // Обработка формы
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('elementId').value;
+            const title = document.getElementById('elementTitle').value;
+            const category = document.getElementById('elementCategory').value;
+            const description = document.getElementById('elementDescription').value;
+            const mediaFile = document.getElementById('elementMedia').files[0];
+            const mediaType = document.getElementById('mediaType').value;
+
+            const saveElement = (mediaData) => {
+                const elementData = {
+                    title,
+                    category,
+                    description,
+                    media: mediaData,
+                    mediaType,
+                    createdAt: new Date().toISOString()
+                };
+
+                if (id) {
+                    // Редактирование
+                    if (mediaData) {
+                        elements[id].media = mediaData;
+                        elements[id].mediaType = mediaType;
+                    }
+                    elements[id].title = title;
+                    elements[id].category = category;
+                    elements[id].description = description;
+                } else {
+                    // Добавление
+                    elements.push(elementData);
+                }
+
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                closeModal();
+                renderElements();
+            };
+
+            if (mediaFile) {
+                const reader = new FileReader();
+                reader.onload = (e) => saveElement(e.target.result);
+                reader.readAsDataURL(mediaFile);
+            } else if (id) {
+                saveElement(null);
+            }
+        }
+
+        // Редактирование элемента
+        function editElement(index) {
+            openModal(index);
+        }
+
+        // Удаление элемента
+        function deleteElement(index) {
+            if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+                elements.splice(index, 1);
+                localStorage.setItem('danceElements', JSON.stringify(elements));
+                renderElements();
+            }
+        }
+
+        // Открытие просмотрщика
+        function openViewer(index) {
+            currentViewIndex = index;
+            updateViewerContent();
+            document.getElementById('viewerModal').classList.add('active');
+        }
+
+        // Обновление содержимого просмотрщика
+        function updateViewerContent() {
+            const el = elements[currentViewIndex];
+            const content = document.getElementById('viewerContent');
+            
+            content.innerHTML = `
+                ${el.mediaType === 'video' 
+                    ? `<video src="${el.media}" controls autoplay></video>` 
+                    : `<img src="${el.media}" alt="${el.title}">`}
+                <div class="viewer-info">
+                    <span class="element-category">${getCategoryName(el.category)}</span>
+                    <h3>${el.title}</h3>
+                    <p>${el.description}</p>
+                </div>
+            `;
+        }
+
+        // Закрытие просмотрщика
+        function closeViewer() {
+            document.getElementById('viewerModal').classList.remove('active');
+            // Остановить видео при закрытии
+            const video = document.querySelector('#viewerContent video');
+            if (video) video.pause();
+        }
+
+        // Показать предыдущий элемент
+        function showPrevElement() {
+            const currentIndex = filteredElements.findIndex((el, i) => elements.indexOf(el) === currentViewIndex);
+            const newIndex = currentIndex > 0 ? currentIndex - 1 : filteredElements.length - 1;
+            currentViewIndex = elements.indexOf(filteredElements[newIndex]);
+            updateViewerContent();
+        }
+
+        // Показать следующий элемент
+        function showNextElement() {
+            const currentIndex = filteredElements.findIndex((el, i) => elements.indexOf(el) === currentViewIndex);
+            const newIndex = currentIndex < filteredElements.length - 1 ? currentIndex + 1 : 0;
+            currentViewIndex = elements.indexOf(filteredElements[newIndex]);
+            updateViewerContent();
+        }
     </script>
 </body>
 </html>
